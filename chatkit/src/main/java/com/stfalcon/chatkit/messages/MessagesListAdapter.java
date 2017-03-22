@@ -50,7 +50,7 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
 
     private HoldersConfig holders;
     private String senderId;
-    private List<Wrapper> items;
+    protected List<Wrapper> items;
 
     private int selectedItemsCount;
     private boolean isSelectMode;
@@ -528,8 +528,8 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     /*
     * WRAPPER
     * */
-    private class Wrapper<DATA> {
-        private DATA item;
+    public class Wrapper<DATA> {
+        public DATA item;
         boolean isSelected;
 
         Wrapper(DATA item) {
