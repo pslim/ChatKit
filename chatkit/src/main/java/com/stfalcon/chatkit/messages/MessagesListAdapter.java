@@ -529,11 +529,15 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     * WRAPPER
     * */
     public class Wrapper<DATA> {
-        public DATA item;
+        private DATA item;
         boolean isSelected;
 
         Wrapper(DATA item) {
             this.item = item;
+        }
+
+        public DATA getItem() {
+            return item;
         }
     }
 
