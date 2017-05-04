@@ -48,7 +48,6 @@ public class MessagesList extends RecyclerView {
 
     /**
      * Don't use this method for setting your adapter, otherwise exception will by thrown.
-     * Call {@link #setAdapter(MessagesListAdapter)} instead.
      */
     @Override
     public void setAdapter(Adapter adapter) {
