@@ -191,9 +191,6 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
      */
     public void addToEnd(List<MESSAGE> messages, boolean reverse) {
         if (reverse) Collections.reverse(messages);
-        if (!reverse) {
-            generateDateHeaders(messages);
-        }
 
         if (!items.isEmpty()) {
             int lastItemPosition = items.size() - 1;
@@ -205,9 +202,7 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         }
 
         int oldSize = items.size();
-        if (reverse) {
-            generateDateHeaders(messages);
-        }
+        generateDateHeaders(messages, reverse);
         notifyItemRangeInserted(oldSize, items.size() - oldSize);
     }
 
@@ -409,10 +404,12 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         }
     }
 
-    private void generateDateHeaders(List<MESSAGE> messages) {
+    private void generateDateHeaders(List<MESSAGE> messages, boolean reverse) {
         for (int i = 0; i < messages.size(); i++) {
             MESSAGE message = messages.get(i);
-            this.items.add(new Wrapper<>(message));
+            if (reverse) {
+                this.items.add(new Wrapper<>(message));
+            }
             if (messages.size() > i + 1) {
                 MESSAGE nextMessage = messages.get(i + 1);
                 if (!DateFormatter.isSameDay(message.getCreatedAt(), nextMessage.getCreatedAt())) {
@@ -420,6 +417,9 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
                 }
             } else {
                 this.items.add(new Wrapper<>(message.getCreatedAt()));
+            }
+            if (!reverse) {
+                this.items.add(new Wrapper<>(message));
             }
         }
     }
