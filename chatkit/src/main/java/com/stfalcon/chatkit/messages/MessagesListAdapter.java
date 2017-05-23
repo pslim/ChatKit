@@ -409,16 +409,23 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
             MESSAGE message = messages.get(i);
             if (reverse) {
                 this.items.add(new Wrapper<>(message));
-            }
-            if (messages.size() > i + 1) {
-                MESSAGE nextMessage = messages.get(i + 1);
-                if (!DateFormatter.isSameDay(message.getCreatedAt(), nextMessage.getCreatedAt())) {
+                if (messages.size() > i + 1) {
+                    MESSAGE nextMessage = messages.get(i + 1);
+                    if (!DateFormatter.isSameDay(message.getCreatedAt(), nextMessage.getCreatedAt())) {
+                        this.items.add(new Wrapper<>(message.getCreatedAt()));
+                    }
+                } else {
                     this.items.add(new Wrapper<>(message.getCreatedAt()));
                 }
             } else {
-                this.items.add(new Wrapper<>(message.getCreatedAt()));
-            }
-            if (!reverse) {
+                if (i > 0) {
+                    MESSAGE prevMessage = messages.get(i - 1);
+                    if (!DateFormatter.isSameDay(message.getCreatedAt(), prevMessage.getCreatedAt())) {
+                        this.items.add(new Wrapper<>(message.getCreatedAt()));
+                    }
+                } else {
+                    this.items.add(new Wrapper<>(message.getCreatedAt()));
+                }
                 this.items.add(new Wrapper<>(message));
             }
         }
