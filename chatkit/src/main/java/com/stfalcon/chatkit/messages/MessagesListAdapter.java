@@ -191,6 +191,9 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
      */
     public void addToEnd(List<MESSAGE> messages, boolean reverse) {
         if (reverse) Collections.reverse(messages);
+        if (!reverse) {
+            generateDateHeaders(messages);
+        }
 
         if (!items.isEmpty()) {
             int lastItemPosition = items.size() - 1;
@@ -202,7 +205,9 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         }
 
         int oldSize = items.size();
-        generateDateHeaders(messages);
+        if (reverse) {
+            generateDateHeaders(messages);
+        }
         notifyItemRangeInserted(oldSize, items.size() - oldSize);
     }
 
