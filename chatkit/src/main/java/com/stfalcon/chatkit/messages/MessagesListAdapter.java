@@ -184,6 +184,25 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     }
 
     /**
+     * Adds message to bottom of list and scroll if needed.
+     *
+     * @param message message to add.
+     * @param scroll  {@code true} if need to scroll list to bottom when message added.
+     */
+    public void addToEnd(MESSAGE message, boolean scroll) {
+        boolean isNewMessageToday = !isPreviousSameDate(0, message.getCreatedAt());
+        if (isNewMessageToday) {
+            items.add(new Wrapper<>(message.getCreatedAt()));
+        }
+        Wrapper<MESSAGE> element = new Wrapper<>(message);
+        items.add(element);
+        notifyItemRangeInserted(items.size() - 1, isNewMessageToday ? 2 : 1);
+        if (layoutManager != null && scroll) {
+            layoutManager.scrollToPosition(items.size() - 1);
+        }
+    }
+
+    /**
      * Adds messages list in chronological order. Use this method to add history.
      *
      * @param messages messages from history.
